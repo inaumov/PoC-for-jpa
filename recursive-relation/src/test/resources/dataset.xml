@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <department department_id="dep_main_1" name="Philips" active="1"/>
+    <department department_id="dep_main_2" name="LG" active="0"/>
+    <department department_id="dep_sub_1" name="Philips Lighting" active="1"/>
+    <department department_id="dep_sub_2" name="Woox Innovations" active="1"/>
+
+    <department_parent department_id="dep_sub_1" parent_department_id="dep_main_1" department_order="5"/>
+    <department_parent department_id="dep_sub_2" parent_department_id="dep_main_1" department_order="10"/>
+</dataset>
