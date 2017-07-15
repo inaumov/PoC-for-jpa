@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <department department_id="department_1" name="Ukrbud" active="1"/>
+    <department department_id="department_2" name="Intergal" active="1"/>
+    <department department_id="department_3" name="Riverside Development" active="1"/>
+
+    <employee employee_id="employee_1" name="Vasya" active="1"/>
+    <employee employee_id="employee_2" name="Petya" active="1"/>
+    <employee employee_id="employee_3" name="Zhora" active="1"/>
+    <employee employee_id="employee_4" name="Misha" active="1"/>
+
+    <department_employee department_id="department_1" employee_id="employee_2" employee_order="10"/>
+    <department_employee department_id="department_1" employee_id="employee_1" employee_order="20"/>
+    <department_employee department_id="department_1" employee_id="employee_3" employee_order="30"/>
+    <department_employee department_id="department_1" employee_id="employee_4" employee_order="40"/>
+    <department_employee department_id="department_2" employee_id="employee_4" employee_order="10"/>
+    <department_employee department_id="department_3" employee_id="employee_1" employee_order="10"/>
+</dataset>
