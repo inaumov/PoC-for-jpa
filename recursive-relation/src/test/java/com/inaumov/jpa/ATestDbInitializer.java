@@ -18,7 +18,7 @@ import java.sql.SQLException;
 @Slf4j
 public abstract class ATestDbInitializer {
 
-    private static final String PERSISTENCE_UNIT_NAME = "jpa-recursive-relation";
+    private static final String PERSISTENCE_UNIT_NAME = "jpa-element-collection-with-embedded-PU";
     EntityManager entityManager;
 
     @Before
@@ -38,15 +38,23 @@ public abstract class ATestDbInitializer {
             //Clean the data from previous test and insert new data test.
             DatabaseOperation.CLEAN_INSERT.execute(mDBUnitConnection, flatXmlDataSet);
         } catch (SQLException | DatabaseUnitException e) {
-            log.error("Database set up has been done...", e);
+            log.error("Database set up has been failed...", e);
         }
         log.info("Database set up has been done...");
         entityManager.getTransaction().begin();
     }
 
+    void commitTransaction() {
+        if (entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().commit();
+        }
+    }
+
     @After
     public void tearDown() throws Exception {
-        entityManager.getTransaction().commit();
+        if (entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().rollback();
+        }
     }
 
 }
