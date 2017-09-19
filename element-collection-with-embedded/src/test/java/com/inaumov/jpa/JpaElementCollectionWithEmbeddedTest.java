@@ -51,6 +51,12 @@ public class JpaElementCollectionWithEmbeddedTest extends ATestDbInitializer {
         book.setWords(words);
         entityManager.persist(book);
         commitTransaction();
+
+        assertTablesByQuery(
+                "expected.xml",
+                "select * from book_words where book_id = \'test_id\'",
+                "book_words"
+        );
     }
 
     @Test

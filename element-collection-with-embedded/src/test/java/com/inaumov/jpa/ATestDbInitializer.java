@@ -1,6 +1,7 @@
 package com.inaumov.jpa;
 
 import lombok.extern.slf4j.Slf4j;
+import org.dbunit.Assertion;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
@@ -27,8 +28,7 @@ public abstract class ATestDbInitializer {
         try {
             EntityManagerFactory emFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
             entityManager = emFactory.createEntityManager();
-            Connection conn = entityManager.unwrap(Connection.class);
-            DatabaseConnection mDBUnitConnection = new DatabaseConnection(conn);
+
             //Loads the data set from a file named dataset.xml
             FlatXmlDataSet flatXmlDataSet = new FlatXmlDataSetBuilder()
                     .build(
@@ -36,12 +36,27 @@ public abstract class ATestDbInitializer {
                                     .getContextClassLoader()
                                     .getResourceAsStream("dataset.xml"));
             //Clean the data from previous test and insert new data test.
-            DatabaseOperation.CLEAN_INSERT.execute(mDBUnitConnection, flatXmlDataSet);
+            DatabaseOperation.CLEAN_INSERT.execute(getDatabaseConnection(), flatXmlDataSet);
         } catch (SQLException | DatabaseUnitException e) {
             log.error("Database set up has been failed...", e);
         }
         log.info("Database set up has been done...");
         entityManager.getTransaction().begin();
+    }
+
+    private DatabaseConnection getDatabaseConnection() throws DatabaseUnitException {
+        Connection conn = entityManager.unwrap(Connection.class);
+        return new DatabaseConnection(conn);
+    }
+
+    void assertTablesByQuery(String expectedDataSetName, String sqlQuery, String table) throws Exception {
+        FlatXmlDataSet expectedDataSet = new FlatXmlDataSetBuilder()
+                .build(
+                        Thread.currentThread()
+                                .getContextClassLoader()
+                                .getResourceAsStream(expectedDataSetName));
+
+        Assertion.assertEqualsByQuery(expectedDataSet, getDatabaseConnection(), sqlQuery, table, new String[]{});
     }
 
     void commitTransaction() {
