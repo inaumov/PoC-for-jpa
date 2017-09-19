@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <book book_id="book_1" name="Hello world" active="1"/>
+    <book book_id="book_2" name="Alphabet" active="1"/>
+    <book book_id="book_3" name="JPA guide" active="1"/>
+
+    <book_words book_id="book_1" word_id="Hello"/>
+    <book_words book_id="book_1" word_id="world"/>
+    <book_words book_id="book_1" word_id="and"/>
+    <book_words book_id="book_1" word_id="nice"/>
+    <book_words book_id="book_2" word_id="to"/>
+    <book_words book_id="book_3" word_id="meet"/>
+    <book_words book_id="book_3" word_id="you"/>
+</dataset>
